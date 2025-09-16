@@ -78,8 +78,12 @@ int main(int argc, char *argv[])
 
         // Register content from external pandora libraries
         PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterAlgorithms(*pPandora));
-        PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBasicPlugins(*pPandora));
-        PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBFieldPlugin(*pPandora, 3.5f, -1.5f, 0.01f));
+        // GM: use ALLEGRO pseudolayer plugin
+        // PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBasicPlugins(*pPandora));
+        PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBasicPlugins(*pPandora, "ALLEGRO"));
+        // GM: 2T B field in main tracker volume. What about muon barrel and endcaps?
+        // PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBFieldPlugin(*pPandora, 3.5f, -1.5f, 0.01f));
+        PANDORA_RETURN_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, LCContent::RegisterBFieldPlugin(*pPandora, 2.0f, 0.0f, 0.0f));
 
         // Read in the PandoraSettings
         PANDORA_THROW_RESULT_IF(pandora::STATUS_CODE_SUCCESS, !=, PandoraApi::ReadSettings(*pPandora, parameters.m_pandoraSettingsFile));
